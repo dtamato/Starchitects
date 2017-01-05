@@ -6,6 +6,7 @@ public class PlayerData : MonoBehaviour {
 
 	int currentPower;
 
+	int hydrogenAmount = 1;
 
 	void Awake () {
 
@@ -18,10 +19,34 @@ public class PlayerData : MonoBehaviour {
 
 		return currentPower;
 	}
+	#endregion
 
-	public void ChangeCurrentPower (int amount) {
+	public void IncreaseCurrentPower (int amount) {
 
 		currentPower += amount;
 	}
-	#endregion
+
+	public void DecreaseCurrentPower(int amount) {
+
+		currentPower -= amount;
+	}
+
+	// Hydrogen
+	public void IncreaseHydrogenAmount (int amount) {
+
+		hydrogenAmount += amount;
+	}
+
+	public void DecreaseHydrogenAmount () {
+
+		if(hydrogenAmount > 0) {
+
+			hydrogenAmount--;
+		}
+	}
+
+	public int GetHydrogenAmount () {
+
+		return hydrogenAmount;
+	}
 }

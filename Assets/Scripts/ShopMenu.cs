@@ -1,15 +1,20 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class ShopMenu : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
+	[SerializeField] PlayerData playerData;
+	[SerializeField] Text currentPowerText;
+
+
+	void OnEnable () {
+
+		UpdateCurrentPower ();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	public void UpdateCurrentPower () {
+
+		currentPowerText.text = "Power: " + playerData.GetCurrentPower ().ToString ();
 	}
 }
