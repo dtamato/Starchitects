@@ -7,6 +7,7 @@ public class PlayerData : MonoBehaviour {
 	int currentPower;
 
 	int hydrogenAmount = 1;
+	int pressureCookerAmount = 10;
 
 	void Awake () {
 
@@ -15,10 +16,9 @@ public class PlayerData : MonoBehaviour {
 
 
 	#region Getters
-	public int GetCurrentPower () {
-
-		return currentPower;
-	}
+	public int GetCurrentPower () { return currentPower; }
+	public int GetHydrogenAmount () { return hydrogenAmount; }
+	public int GetPressureCookerAmount () { return pressureCookerAmount; }
 	#endregion
 
 	public void IncreaseCurrentPower (int amount) {
@@ -45,8 +45,5 @@ public class PlayerData : MonoBehaviour {
 		}
 	}
 
-	public int GetHydrogenAmount () {
 
-		return hydrogenAmount;
-	}
 }
