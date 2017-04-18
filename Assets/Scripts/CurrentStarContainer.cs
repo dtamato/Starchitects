@@ -12,7 +12,7 @@ public class CurrentStarContainer : MonoBehaviour {
 
 	void OnMouseDown () {
 
-		if(Input.GetMouseButtonDown(0)) {
+		if(Input.GetMouseButtonDown(0) && currentStar.gameObject.GetComponentInChildren<Light>().enabled == true) {
 
 			starStatsPanel.SetActive(!starStatsPanel.activeSelf);
 		}

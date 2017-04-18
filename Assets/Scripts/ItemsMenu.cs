@@ -1,6 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
+using UnityEngine.EventSystems;
+
+public enum Tool { Pressurer, Rotator }
 
 [DisallowMultipleComponent]
 public class ItemsMenu : MonoBehaviour {
@@ -14,6 +17,7 @@ public class ItemsMenu : MonoBehaviour {
 	[SerializeField] GameObject confirmItemMenu;
 
 	ElementType elementToFeed;
+	Tool toolUsing;
 
 	void OnEnable () {
 
@@ -33,7 +37,8 @@ public class ItemsMenu : MonoBehaviour {
 		if (elementToFeed == ElementType.Hydrogen && playerData.GetHydrogenAmount () > 0) {
 
 			confirmFeedMenu.SetActive (true);
-			confirmFeedMenu.GetComponentInChildren<Text>().text = "Add" + elementToFeed.ToString() + " to star?";
+			confirmFeedMenu.GetComponentInChildren<Text>().text = "Add " + elementToFeed.ToString() + "\nto star?";
+			confirmFeedMenu.transform.GetChild(1).GetComponentInChildren<Image>().color = EventSystem.current.currentSelectedGameObject.transform.GetChild(0).GetComponentInChildren<Image>().color;
 			this.gameObject.SetActive (false);
 		}
 	}
@@ -66,14 +71,36 @@ public class ItemsMenu : MonoBehaviour {
 
 			confirmItemMenu.SetActive(true);
 			confirmItemMenu.GetComponentInChildren<Text>().text = "Add pressure\n to star?";
+			confirmItemMenu.transform.GetChild(3).GetComponent<Image>().sprite = EventSystem.current.currentSelectedGameObject.transform.GetChild(0).GetComponent<Image>().sprite;
+			confirmItemMenu.transform.GetChild(3).GetComponent<Image>().color = Color.blue;
+			toolUsing = Tool.Pressurer;
 			this.gameObject.SetActive(false);
 		}
+	}
+
+	public void AddRotation () {
+
+		confirmItemMenu.SetActive(true);
+		confirmItemMenu.GetComponentInChildren<Text>().text = "Add rotation\n to star?";
+		confirmItemMenu.transform.GetChild(3).GetComponent<Image>().sprite = EventSystem.current.currentSelectedGameObject.transform.GetChild(0).GetComponent<Image>().sprite;
+		confirmItemMenu.transform.GetChild(3).GetComponent<Image>().color = Color.blue;
+		toolUsing = Tool.Rotator;
+		this.gameObject.SetActive(false);
 	}
 
 	public void ConfirmItemUse () {
 
 		Star currentStar = currentStarContainer.GetCurrentStar();
-		currentStar.PressureStar();
+
+		switch (toolUsing) {
+		case Tool.Pressurer:
+			currentStar.PressureStar();
+			break;
+		case Tool.Rotator:
+			currentStar.RotateStar();
+			break;
+		}
+
 		starStatsPanel.UpdateStarStats();
 		confirmItemMenu.SetActive(false);
 	}
